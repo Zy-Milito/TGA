@@ -1,0 +1,31 @@
+{//;The custom role to be given.}
+{set;~role;856969164605095966}
+{//;The user being edited.}
+{set;~user;{userid;{args;0}}}
+{//;Logchannel.}
+{set;logchannel;572148453287788555}
+
+{//;Check to see whether the user has Admin perms.}
+{set;~admin;771344089211338752}
+
+{//;Check to see whether the user has the role already.}
+{set;~roled;{hasrole;{get;~role}}}
+
+{//;Check if arguments are correct.}
+{if;==;{userhasrole;{get;~admin}};false;
+  {usermention} **Error!** {newline}You need the Dragon Council role to run this command!{return}
+}
+
+{if;==;{userhasrole;{get;~admin}};true;
+  {if;{argslength};<;1;
+    {usermention} | ☠️ **Warning!** {newline}Please input ID.{return}
+  }
+
+  {if;{argslength};>;0;
+    {if;{rolemembers;{get;~role}};includes;{get;~user};{usernick;{get;~user}} already has the role {rolename;{get;~role}}{return}}
+
+    {if;==;{get;~roled};false;
+      {void;{roleadd;{get;~role};{get;~user}}}{void;{send;{get;logchannel};{embedbuild;title:Happy Hatchday!;description:{usermention;{get;~user}} has been given the hatchday role. {newline}The role will be removed in 24hs!;color:#bf8f00}}}{delete}{timer;{void;{roleremove;{get;~role};{get;~user}}};24h}
+    }
+  }
+}

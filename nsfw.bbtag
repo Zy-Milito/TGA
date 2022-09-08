@@ -1,0 +1,53 @@
+{//;Addrole command by Neftis#9919}
+{//;The custom role to be given.}
+{set;~role;973996860278710292}
+{//;The user being edited.}
+{set;~user;{userid}}
+{//;Logchannel.}
+{set;logchannel;792541486029602817}
+
+{//;Check to see whether the user has role perms.}
+{set;~admin;771292416879099935}
+
+{//;Action parameters}
+{set;~on;{bool;==;{args;0};on}}
+{set;~off;{bool;==;{args;0};off}}
+
+{//;Check to see whether the user has role already.}
+{set;~roled;{hasrole;{get;~role}}}
+
+{//;Check if arguments are correct.}
+{if;==;{userhasrole;{get;~admin}};false;
+  {set;~msg00;{send;{channelid};{usermention} **Error!**{newline}You need to have the Ardent Dragon role to run this command!}}{timer;{delete;{get;~msg00}};5s}{delete}{return}
+}
+
+{if;==;{userhasrole;{get;~admin}};true;
+  
+  {if;==;{logic;;{get;~on};{get;~off}};false;
+    {set;~on;true}
+  }
+
+  {if;==;{get;~on};true;
+    {if;==;{get;~roled};true;
+      {set;~msg01;{send;{channelid};{usermention} | ⚠️ **Error!** {newline} You asked me to give you the role **{rolename;{get;~role}}**, but you already have that role! (If you wanted to remove the role, say `%nsfw off`)}}{timer;{delete;{get;~msg01}};5s}{delete}{return}
+    }
+
+    {if;==;{addrole;{get;~role};{get;~user}};true;
+      {set;~msg02;{send;{channelid};{usermention} | ✅ **Success!** {newline}Rawr! You have the role now! (You can remove this role by saying `%nsfw off`)}}{timer;{delete;{get;~msg02}};5s}{void;{send;{get;logchannel};{embedbuild;title:NSFW Hub access granted;description:{usermention;{get;~user}} has entered the NSFW Hub.;color:#008000}}}{delete}{return}
+      ;
+      {throw;☠️ Internal error. CODE 1}{return}
+    }
+  }
+
+  {if;==;{get;~off};true;
+    {if;==;{get;~roled};false;
+      {set;~msg03;{send;{channelid};{usermention} | ⚠️ **Error!** {newline}You asked me to remove the role **{rolename;{get;~role}}**, but you don't have that role! (If you wanted to add the role, say `%nsfw on`)}}{timer;{delete;{get;~msg03}};5s}{delete}{return}
+    }
+    
+    {if;==;{removerole;{get;~role};{get;~user}};true;
+      {set;~msg04;{send;{channelid};{usermention} | ✅ **Success!** {newline}I've removed **{rolename;{get;~role}}** from your roles! (To add it again, say `%nsfw on`)}}{timer;{delete;{get;~msg04}};5s}{void;{send;{get;logchannel};{embedbuild;title:NSFW Hub access withdrawn;description:{usermention;{get;~user}} has left the NSFW Hub.;color:#ff0000}}}{delete}{return}
+      ;
+      {throw;☠️ Internal error. CODE 2}{return}
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{//;The user being edited.}
+{set;~user;{userid}}
+
+{//;Set the logchannel.}
+{set;logchannel;949818709910892626}
+
+{//;The suggestion to be logged.}
+{void;{set;~msg00;{send;{get;logchannel};{embedbuild;title:New Suggestion!;description:{args}{newline;2}**Submitter:** {usermention;{get;~user}};color:#f4d16e}}}}{reactadd;949818709910892626;{get;~msg00};:white_check_mark:;:x:}
+
+{//;Confirmation message.}
+{set;~msg01;{send;{channelid};{usermention} | ✅ **Success!** {newline}Your suggestion has been recorded.}}{timer;{delete;{get;~msg01}};5s}{delete}{return}

@@ -1,0 +1,22 @@
+{//;Message to be edited.}
+{set;~messageid;{args;0}}
+{//;Check to see whether the user has Admin perms.}
+{set;~admin;771344089211338752}
+
+{//;Check if arguments are correct.}
+{if;==;{userhasrole;{get;~admin}};false;
+  {usermention} **Error!** {newline}You need to have the Dragon Council role to run this command!{return}
+}
+
+{if;==;{userhasrole;{get;~admin}};true;
+  {if;{argslength};<;1;
+    {usermention} | :skull_crossbones: **Warning!** {newline}Please input message ID.{return}
+  }
+
+  {if;{argslength};>;0;
+    {set;~embeddata;{jget;{messageembeds;949818709910892626;{get;~messageid}};0}}
+    {set;~embeddata;{jset;{get;~embeddata};title;Suggestion rejected.}}
+    {edit;949818709910892626;{get;~messageid};;{get;~embeddata}}
+    {reactremoveall;949818709910892626;{get;~messageid}}
+  }
+}

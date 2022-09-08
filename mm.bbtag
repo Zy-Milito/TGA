@@ -1,0 +1,36 @@
+{//;The custom role to be given.}
+{set;~role;890791571056885800}
+{//;The user being edited.}
+{set;~user;{userid;{args;0}}}
+{//;Logchannel.}
+{set;logchannel;775179851938267156}
+
+{//;Check to see whether the user has Admin perms.}
+{set;~admin;771344089211338752}
+
+{//;Check to see whether the user has the role already.}
+{set;~roled;{hasrole;{get;~role}}}
+
+{//;Check to see if you are running the command on yourself.}
+{if;{get;~user};==;{userid};
+    {usermention} **Error!** {newline}You cannot run this command on yourself!{return}
+}
+
+{//;Check if arguments are correct.}
+{if;==;{userhasrole;{get;~admin}};false;
+    {usermention} **Error!** {newline}You need to have the Dragon Council role to run this command!{return}
+}
+
+{if;==;{userhasrole;{get;~admin}};true;
+    {if;{argslength};<;1;
+        {usermention} | ☠️ **Warning!** {newline}Please input ID.{return}
+    }
+
+    {if;{argslength};>;0;
+        {if;{rolemembers;{get;~role}};includes;{get;~user};{usernick;{get;~user}} already has the role {rolename;{get;~role}}{return}}
+
+        {if;==;{get;~roled};false;
+            {void;{roleadd;{get;~role};{get;~user}}}{void;{send;{get;logchannel};{embedbuild;title:User media locked;description:{usermention;{get;~user}} has been media locked.;color:#000000}}}{delete}
+        }
+    }
+}

@@ -1,0 +1,41 @@
+{//;Addrole command by Neftis the Dragon#9919}
+{//;The custom role to be given.}
+{set;~role;771293625787088897}
+{//;The user being edited.}
+{set;~user;{userid}}
+
+{//;Action parameters}
+{set;~on;{bool;==;{args;0};on}}
+{set;~off;{bool;==;{args;0};off}}
+
+{//;Check to see whether the user has role already.}
+{set;~roled;{hasrole;{get;~role}}}
+
+{//;Check if arguments are correct.}
+{//;
+{if;==;{logic;;{get;~on};{get;~off}};false;
+  {usermention} | ⚠️ **Warning!** {newline}Incorrect argument. Please specify on or off. (For example, /sn on, or /sn off.){return}
+}
+}
+
+{if;==;{logic;;{get;~on};{get;~off}};false;
+  {set;~on;true}
+}
+
+{if;==;{get;~on};true;
+  {if;==;{get;~roled};true;{usermention} | ⚠️ **Error!** {newline} You asked me to give you the role **{rolename;{get;~role}}**, but you already have that role! (If you wanted to remove the role, say `/roleplayer off`){return}}
+  {if;==;{addrole;{get;~role};{get;~user}};true;
+      {usermention} | ✅ **Success!** {newline}Rawr! You have the role now! (You can remove this role by saying `/roleplayer off`)
+    ;
+      {throw;☠️ Internal error. CODE 1}{return}
+  }
+}
+
+{if;==;{get;~off};true;
+  {if;==;{get;~roled};false;{usermention} | ⚠️ **Error!** {newline}You asked me to remove the role **{rolename;{get;~role}}**, but you don't have that role! (If you wanted to add the role, say `/roleplayer on`){return}}
+  {if;==;{removerole;{get;~role};{get;~user}};true;
+      {usermention} | ✅ **Success!** {newline}I've removed **{rolename;{get;~role}}** from your roles! (To add it again, say `/roleplayer on`){return}
+    ;
+      {throw;☠️ Internal error. CODE 2}{return}
+  }
+}
