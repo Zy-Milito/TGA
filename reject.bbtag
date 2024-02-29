@@ -5,12 +5,12 @@
 
 {//;Check if arguments are correct.}
 {if;==;{userhasrole;{get;~admin}};false;
-  {usermention} **Error!** {newline}You need to have the Dragon Council role to run this command!{return}
+  {set;~msg00;{send;{channelid};{usermention} | :warning: **Error!** {newline}You need to have the Dragon Council role to run this command!}}{timer;{delete;{get;~msg00}};5s}{delete}{return}
 }
 
 {if;==;{userhasrole;{get;~admin}};true;
   {if;{argslength};<;1;
-    {usermention} | :skull_crossbones: **Warning!** {newline}Please input message ID.{return}
+    {set;~msg01;{send;{channelid};{usermention} | :skull_crossbones: **Warning!** {newline}Please input message ID.}}{timer;{delete;{get;~msg01}};5s}{delete}{return}
   }
 
   {if;{argslength};>;0;
@@ -18,5 +18,6 @@
     {set;~embeddata;{jset;{get;~embeddata};title;Suggestion rejected.}}
     {edit;949818709910892626;{get;~messageid};;{get;~embeddata}}
     {reactremoveall;949818709910892626;{get;~messageid}}
+    {set;~msg02;{send;{channelid};{usermention} | ✅ **Success!** {newline}The suggestion has been rejected.}}{timer;{delete;{get;~msg02}};5s}{delete}{return}
   }
 }
