@@ -1,4 +1,4 @@
-{//;Addrole command by theprimedragon}
+{//;Add role command by theprimedragon}
 {//;The custom role to be given.}
 {set;~role;973996733690433606}
 {//;The user being edited.}
