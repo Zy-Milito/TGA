@@ -18,7 +18,7 @@
 
 {//;Check if arguments are correct.}
 {if;==;{userhasrole;{get;~admin}};false;
-  {set;~msg00;{send;{channelid};{usermention} **Error!**{newline}You need to have the ✔ Age Verified role to run this command!}}{timer;{delete;{get;~msg00}};5s}{delete}{return}
+  {set;~msg00;{send;{channelid};{usermention} **Error!**{newline}You need to verify your age to run this command!}}{timer;{delete;{get;~msg00}};5s}{delete}{return}
 }
 
 {if;==;{userhasrole;{get;~admin}};true;
