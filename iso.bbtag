@@ -8,29 +8,39 @@
 {//;Check to see whether the user has Admin perms.}
 {set;~admin;771344089211338752}
 
+{if;==;{userhasrole;{get;~admin}};false;
+  {set;~msg01;{send;{channelid};⚠️ **Error!** | {usermention}{newline}You need to have the Dragon Council role to run this command!}}{timer;{delete;{get;~msg01}};5s}{delete}{return}
+}
+
 {//;Check to see whether the user has the role already.}
 {set;~roled;{hasrole;{get;~role}}}
 
 {//;Check to see if you're fucking yourself.}
 {if;{get;~user};==;{userid};
-  {usermention} **Error!** {newline}You cannot run this command on yourself!{return}
+  {set;~msg00;{send;{channelid};⚠️ **Error!**{newline}You cannot run this command on yourself, {usermention}!}}{timer;{delete;{get;~msg00}};5s}{delete}{return}
 }
 
 {//;Check if arguments are correct.}
-{if;==;{userhasrole;{get;~admin}};false;
-  {usermention} **Error!** {newline}You need to have the Dragon Council role to run this command!{return}
-}
-
 {if;==;{userhasrole;{get;~admin}};true;
   {if;{argslength};<;1;
-    {usermention} | ☠️ **Warning!** {newline}Please input ID.{return}
+    {set;~msg02;{send;{channelid};⚠️ **Warning!** | {usermention}{newline}Please input ID.}}{timer;{delete;{get;~msg02}};5s}{delete}{return}
   }
 
   {if;{argslength};>;0;
-    {if;{rolemembers;{get;~role}};includes;{get;~user};{usernick;{get;~user}} already has the role {rolename;{get;~role}}{return}}
+    {if;{rolemembers;{get;~role}};includes;{get;~user};
+      {set;~msg03;{send;{channelid};⚠️ **Error!**{newline}**{usernick;{get;~user}}** already has the role {rolename;{get;~role}}}}{timer;{delete;{get;~msg03}};5s}{delete}{return}
+    }
 
     {if;==;{get;~roled};false;
-      {void;{roleadd;{get;~role};{get;~user}}}{void;{roleremove;862708664242667560;{get;~user}}}{void;{roleremove;890574602781200394;{get;~user}}}{void;{roleremove;859657592104157184;{get;~user}}}{void;{roleremove;973996860278710292;{get;~user}}}{void;{roleremove;973996733690433606;{get;~user}}}{void;{roleremove;771292416879099935;{get;~user}}}{void;{roleremove;787874974148460564;{get;~user}}}{void;{send;{get;logchannel};{embedbuild;title:User Isolated;description:{usermention;{get;~user}} has been given isolation.;color:#000000}}}{delete}
+      {void;{roleadd;{get;~role};{get;~user}}}{void;{roleremove;890574602781200394;{get;~user}}}{void;{roleremove;859657592104157184;{get;~user}}}{void;{roleremove;973996860278710292;{get;~user}}}{void;{roleremove;973996733690433606;{get;~user}}}{void;{roleremove;787874974148460564;{get;~user}}}
+
+      {set;~msg04;{send;{channelid};✅ User isolated successfully.}}{timer;{delete;{get;~msg04}};5s}
+
+      {void;{send;{get;logchannel};{embedbuild;title:User Isolated;description:{usermention;{get;~user}} has been given isolation.{newline}{newline}**Moderator:** {usermention};color:#CE00FF}}}
+
+      {delete}{return}
+      ;
+      {throw;☠️ Internal error. CODE 1}{return}
     }
   }
 }
