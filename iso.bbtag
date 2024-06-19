@@ -36,7 +36,7 @@
 
       {set;~msg04;{send;{channelid};✅ User isolated successfully.}}{timer;{delete;{get;~msg04}};5s}
 
-      {void;{send;{get;logchannel};{embedbuild;title:User Isolated;description:{usermention;{get;~user}} has been given isolation.{newline}{newline}**Moderator:** {usermention};color:#CE00FF}}}
+      {void;{send;{get;logchannel};{embedbuild;title:User Isolated;description:{usernick;{get;~user}} has been given isolation.{newline}{newline}**Moderator:** {usermention};color:#CE00FF}}}
 
       {delete}{return}
       ;
