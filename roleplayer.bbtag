@@ -16,7 +16,7 @@
   {usermention} | ⚠️ **Warning!** {newline}Incorrect argument. Please specify on or off. (For example, /sn on, or /sn off.){return}
 }
 
-{if;==;{logic;;{get;~on};{get;~off}};false;
+{if;==;{logic;{get;~on};||;{get;~off}};false;
   {set;~on;true}
 }
 
