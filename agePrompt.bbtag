@@ -1,17 +1,11 @@
-{set;~role1;1309294642478448650}
-{set;~role2;1309294609926455399}
-{set;~role3;1309294561125863507}
-{set;~role4;1309294480276586557}
+{set;~role1;1309294609926455399}
+{set;~role2;1309294480276586557}
 
 {set;~roled1;{hasrole;{get;~role1}}}
 {set;~roled2;{hasrole;{get;~role2}}}
-{set;~roled3;{hasrole;{get;~role3}}}
-{set;~roled4;{hasrole;{get;~role4}}}
 
 {if;{logic;&&;
 {bool;{get;~roled1};==;false};
-{bool;{get;~roled2};==;false};
-{bool;{get;~roled3};==;false};
-{bool;{get;~roled4};==;false}};
+{bool;{get;~roled2};==;false}};
   {dm;{userid};Hey {usermention}!{newline}Please verify your age in the Channels & Roles menu on top of the channel list in order to continue using TGA.{newline}The Dragon Council thanks you! :purple_heart:}{return}
 }
