@@ -1,0 +1,16 @@
+{set;~user;{userid;{args;0}}}
+{set;~admin;771344089211338752}
+{if;==;{userhasrole;{get;~admin}};false;
+  {usermention} **Error!** {newline}You need the Dragon Council role to run this command!{return}
+}
+
+{if;==;{userhasrole;{get;~admin}};true;
+  {if;{argslength};<;1;
+    {usermention} | ☠️ **Warning!** {newline}Please input ID.{return}
+  }
+
+  {if;{argslength};>;0;
+    {dm;{get;~user};**Greetings {usernick;{get;~user}}! Your TGA Staff Application has been accepted.**{newline}An admin will DM you soon.{newline}{newline}In the meantime, we suggest you make sure you have 2-FA enabled on your account.{newline}Thank you! 🎀}
+    {set;~confirmation;{send;{channelid};{usermention} | ✅ **Success!** {newline}{usernick;{get;~user}} has been informed and will be waiting for an admin to contact them soon.}}{timer;{delete;{get;~confirmation}};10s}{delete}{return}
+  }
+}
