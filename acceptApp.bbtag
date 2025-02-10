@@ -11,6 +11,6 @@
 
   {if;{argslength};>;0;
     {dm;{get;~user};**Greetings {usernick;{get;~user}}! Your TGA Staff Application has been accepted.**{newline}An admin will DM you soon.{newline}{newline}In the meantime, we suggest you make sure you have 2-FA enabled on your account.{newline}Thank you! 🎀}
-    {set;~confirmation;{send;{channelid};{usermention} | ✅ **Success!** {newline}{usernick;{get;~user}} has been informed and will be waiting for an admin to contact them soon.}}{timer;{delete;{get;~confirmation}};10s}{delete}{return}
+    {set;~confirmation;{send;{channelid};{usermention} | ✅ **Success!** {newline}{usernick;{get;~user}} has been informed and will be waiting for an admin to contact them soon.}}{delete}{return}
   }
 }
